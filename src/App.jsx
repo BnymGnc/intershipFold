@@ -2,17 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [nameLabel, setNameLabel] = useState("Name*");
-  const [surnameLabel, setSurnameLabel] = useState("Surname*");
-  const [emailLabel, setEmailLabel] = useState("E-mail*");
-  const [repeatEmailLabel, setRepeatEmailLabel] = useState("Repeat E-mail*");
-  const [phoneLabel, setPhoneLabel] = useState("Phone Number*");
-  const [countryCodeLabel, setCountryCodeLabel] = useState("Country Code*");
-  const [countryLabel, setCountryLabel] = useState("Country*");
-  const [cityLabel, setCityLabel] = useState("City*");
-  const [addressLabel, setAddressLabel] = useState("Address*");
-  const [zipCodeLabel, setZipCodeLabel] = useState("Zipcode*");
-
   const [errors, setErrors] = useState({
     Name: "",
     Surname: "",
@@ -30,47 +19,21 @@ function App() {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleChange = (field, value) => {
-    const setterMap = {
-      Name: setNameLabel,
-      Surname: setSurnameLabel,
-      Email: setEmailLabel,
-      RepeatEmail: setRepeatEmailLabel,
-      PhoneNumber: setPhoneLabel,
-      CountryCode: setCountryCodeLabel,
-      Country: setCountryLabel,
-      City: setCityLabel,
-      Address: setAddressLabel,
-      Zipcode: setZipCodeLabel,
-    };
     if (value.trim() === "") {
-      setterMap[field](
-        `${
-          field === "RepeatEmail"
-            ? "Repeat E-mail"
-            : field === "PhoneNumber"
-            ? "Phone Number"
-            : field
-        }*`
-      );
       setErrors((prev) => ({
         ...prev,
-        [field]: `${
-          field === "RepeatEmail"
-            ? "Repeat E-mail"
-            : field === "PhoneNumber"
-            ? "Phone Number"
-            : field
-        } alanını doldurunuz.`,
+        [field]: `${getLabel(field)} alanını doldurunuz.`,
       }));
     } else {
-      setterMap[field](
-        field === "RepeatEmail"
-          ? "Repeat E-mail"
-          : field === "PhoneNumber"
-          ? "Phone Number"
-          : field
-      );
       setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const getLabel = (field) => {
+    switch (field) {
+      case "RepeatEmail": return "Repeat E-mail";
+      case "PhoneNumber": return "Phone Number";
+      default: return field;
     }
   };
 
@@ -100,18 +63,13 @@ function App() {
       "Address",
       "Zipcode",
     ];
+
     let tempErrors = {};
     let hasError = false;
 
     fields.forEach((field) => {
       if (!document.getElementById(field)?.value.trim()) {
-        tempErrors[field] = `${
-          field === "RepeatEmail"
-            ? "Repeat E-mail"
-            : field === "PhoneNumber"
-            ? "Phone Number"
-            : field
-        } alanını doldurunuz.`;
+        tempErrors[field] = `${getLabel(field)} alanını doldurunuz.`;
         hasError = true;
       }
     });
@@ -127,14 +85,12 @@ function App() {
   };
 
   const redStarStyle = { color: "red", marginLeft: "2px" };
-
   const inputStyle = {
     width: "450px",
     padding: "12px",
     fontSize: "14px",
     border: "1px solid rgba(83, 83, 83, 0.3)",
   };
-
   const errorStyle = {
     color: "red",
     fontSize: "12px",
@@ -142,7 +98,7 @@ function App() {
     marginTop: "4px",
   };
   const TableStyle = {
-    marginLeft:"50px",
+    marginLeft: "50px",
     border: "1px solid #bdbfbf",
     width: "1100px",
     borderCollapse: "separate",
@@ -151,53 +107,53 @@ function App() {
 
   return (
     <>
-      <h1 style={{marginLeft:"50px"}}>Contact Information</h1>
+      <h1 style={{ marginLeft: "50px" }}>Contact Information</h1>
       <form onSubmit={handleSubmit}>
         <table style={TableStyle}>
           <tbody>
             <tr>
               <td>
-                <label htmlFor="Name">Name<span style={redStarStyle}>{nameLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Name">Name<span style={redStarStyle}>*</span></label>
               </td>
               <td>
-                <label htmlFor="Surname">Surname<span style={redStarStyle}>{surnameLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Surname">Surname<span style={redStarStyle}>*</span></label>
               </td>
             </tr>
             <tr>
               <td>
-                <input id="Name" type="text" onChange={(e) => handleChange("Name", e.target.value)} style={inputStyle}  />
+                <input id="Name" type="text" onChange={(e) => handleChange("Name", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.Name}</div>
               </td>
               <td>
-                <input id="Surname" type="text" onChange={(e) => handleChange("Surname", e.target.value)} style={inputStyle}  />
+                <input id="Surname" type="text" onChange={(e) => handleChange("Surname", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.Surname}</div>
               </td>
             </tr>
             <tr>
               <td>
-                <label htmlFor="Email">E-mail<span style={redStarStyle}>{emailLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Email">E-mail<span style={redStarStyle}>*</span></label>
               </td>
               <td>
-                <label htmlFor="RepeatEmail">Repeat E-mail<span style={redStarStyle}>{repeatEmailLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="RepeatEmail">Repeat E-mail<span style={redStarStyle}>*</span></label>
               </td>
             </tr>
             <tr>
               <td>
-                <input id="Email" type="email" onChange={(e) => handleChange("Email", e.target.value)} style={inputStyle}  />
+                <input id="Email" type="email" onChange={(e) => handleChange("Email", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.Email}</div>
               </td>
               <td>
-                <input id="RepeatEmail" type="email" onChange={(e) => handleChange("RepeatEmail", e.target.value)} style={inputStyle}  />
+                <input id="RepeatEmail" type="email" onChange={(e) => handleChange("RepeatEmail", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.RepeatEmail}</div>
               </td>
             </tr>
             <tr>
               <td>
-                <label htmlFor="CountryCode">Country Code<span style={redStarStyle}>{countryCodeLabel.includes("*") ? "*" : ""}</span></label>
-                <label htmlFor="PhoneNumber" style={{ marginLeft: "20px" }}>Phone Number<span style={redStarStyle}>{phoneLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="CountryCode">Country Code<span style={redStarStyle}>*</span></label>
+                <label htmlFor="PhoneNumber" style={{ marginLeft: "20px" }}>Phone Number<span style={redStarStyle}>*</span></label>
               </td>
               <td>
-                <label htmlFor="Country">Country<span style={redStarStyle}>{countryLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Country">Country<span style={redStarStyle}>*</span></label>
               </td>
             </tr>
             <tr>
@@ -208,7 +164,7 @@ function App() {
                   <option value="+80">+80</option>
                   <option value="+70">+70</option>
                 </select>
-                <input id="PhoneNumber" type="tel" onChange={(e) => handleChange("PhoneNumber", e.target.value)} style={{ ...inputStyle, width: "350px" }}  />
+                <input id="PhoneNumber" type="tel" onChange={(e) => handleChange("PhoneNumber", e.target.value)} style={{ ...inputStyle, width: "350px" }} />
                 <div style={errorStyle}>
                   {errors.CountryCode && <div>{errors.CountryCode}</div>}
                   {errors.PhoneNumber && <div>{errors.PhoneNumber}</div>}
@@ -226,36 +182,35 @@ function App() {
             </tr>
             <tr>
               <td>
-                <label htmlFor="City">City<span style={redStarStyle}>{cityLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="City">City<span style={redStarStyle}>*</span></label>
               </td>
               <td>
-                <label htmlFor="Address">Address<span style={redStarStyle}>{addressLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Address">Address<span style={redStarStyle}>*</span></label>
               </td>
             </tr>
             <tr>
               <td>
-                <input id="City" type="text" onChange={(e) => handleChange("City", e.target.value)} style={inputStyle}  />
+                <input id="City" type="text" onChange={(e) => handleChange("City", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.City}</div>
               </td>
               <td>
-                <input id="Address" type="text" onChange={(e) => handleChange("Address", e.target.value)} style={inputStyle}  />
+                <input id="Address" type="text" onChange={(e) => handleChange("Address", e.target.value)} style={inputStyle} />
                 <div style={errorStyle}>{errors.Address}</div>
               </td>
             </tr>
             <tr>
               <td>
-                <label htmlFor="Zipcode">Zipcode<span style={redStarStyle}>{zipCodeLabel.includes("*") ? "*" : ""}</span></label>
+                <label htmlFor="Zipcode">Zipcode<span style={redStarStyle}>*</span></label>
               </td>
               <td></td>
             </tr>
             <tr>
               <td>
-                <input id="Zipcode" type="text" onChange={(e) => handleChange("Zipcode", e.target.value)} style={{ ...inputStyle, width: "250px" }}  />
+                <input id="Zipcode" type="text" onChange={(e) => handleChange("Zipcode", e.target.value)} style={{ ...inputStyle, width: "250px" }} />
                 <div style={errorStyle}>{errors.Zipcode}</div>
               </td>
               <td style={{ textAlign: "right" }}>
                 <button type="submit" className="save-button">Save</button>
-
               </td>
             </tr>
             <tr>
@@ -275,3 +230,4 @@ function App() {
 }
 
 export default App;
+
