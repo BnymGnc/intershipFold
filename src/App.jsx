@@ -208,7 +208,7 @@ function App() {
                   <option value="+80">+80</option>
                   <option value="+70">+70</option>
                 </select>
-                <input id="PhoneNumber" type="tel" onChange={(e) => handleChange("PhoneNumber", e.target.value)} style={{ ...inputStyle, width: "340px" }}  />
+                <input id="PhoneNumber" type="tel" onChange={(e) => handleChange("PhoneNumber", e.target.value)} style={{ ...inputStyle, width: "350px" }}  />
                 <div style={errorStyle}>
                   {errors.CountryCode && <div>{errors.CountryCode}</div>}
                   {errors.PhoneNumber && <div>{errors.PhoneNumber}</div>}
